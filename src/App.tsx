@@ -1,5 +1,5 @@
-import { TodoList } from "./components";
+import { PostList } from "./components/";
 
 export default function App() {
-  return <TodoList />;
+  return <PostList />;
 }

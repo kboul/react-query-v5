@@ -8,17 +8,16 @@ interface Todo {
   completed: boolean;
 }
 
-const useTodos = () => {
-  const getTodos = () =>
-    axios
-      .get<Todo[]>("https://jsonplaceholder.typicode.com/todos")
-      .then((res) => res.data);
+const getTodos = () =>
+  axios
+    .get<Todo[]>("https://jsonplaceholder.typicode.com/todos")
+    .then((res) => res.data);
 
-  return useQuery<Todo[], Error>({
+const useTodos = () =>
+  useQuery<Todo[], Error>({
     queryKey: ["todos"],
     queryFn: getTodos,
     staleTime: 10 * 1000, // 10s
   });
-};
 
 export default useTodos;
