@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { Fragment } from "react";
 import { usePosts } from "../hooks";
 
 const pageSize = 10;
 
 export default function PostList() {
-  const [page, setPage] = useState(1);
-  const { data: posts, isLoading, error } = usePosts({ page, pageSize });
+  const { data, isLoading, error, fetchNextPage, isFetchingNextPage } =
+    usePosts({ pageSize });
 
   if (isLoading) return "Loading...";
   if (error) return <p>{error.message}</p>;
@@ -13,23 +13,17 @@ export default function PostList() {
   return (
     <>
       <ul>
-        {posts?.map((todo) => (
-          <li key={todo.id}>{todo.title}</li>
+        {data?.pages.map((page, index) => (
+          <Fragment key={index}>
+            {page.map((post) => (
+              <li key={post.id}>{post.title}</li>
+            ))}
+          </Fragment>
         ))}
       </ul>
 
-      <button
-        disabled={page === 1}
-        onClick={() => setPage((prevPage) => prevPage - 1)}
-        style={{ marginRight: 10 }}
-      >
-        Previous
-      </button>
-      <button
-        disabled={page === pageSize}
-        onClick={() => setPage((prevPage) => prevPage + 1)}
-      >
-        Next
+      <button disabled={isFetchingNextPage} onClick={() => fetchNextPage()}>
+        {isFetchingNextPage ? "Loading..." : "Load more"}
       </button>
     </>
   );
