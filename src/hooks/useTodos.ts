@@ -1,12 +1,7 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
-interface Todo {
-  userId: number;
-  id: number;
-  title: string;
-  completed: boolean;
-}
+import { Todo } from "../types";
 
 const getTodos = () =>
   axios
