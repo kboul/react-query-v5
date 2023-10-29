@@ -25,6 +25,8 @@ export default function TodoForm() {
         savedTodo,
         ...(todos ?? []),
       ]);
+
+      ref.current!.value = "";
     },
   });
 
@@ -49,7 +51,7 @@ export default function TodoForm() {
       )}
       <form onSubmit={handleSubmit}>
         <input ref={ref} type="text" />
-        <button>Add</button>
+        <button>{addTodo.isPending ? "Adding..." : "Add"}</button>
       </form>
     </>
   );
