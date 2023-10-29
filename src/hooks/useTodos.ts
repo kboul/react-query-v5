@@ -2,6 +2,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
 import { Todo } from "../types";
+import { queryKeys } from "../constants";
 
 const getTodos = () =>
   axios
@@ -10,7 +11,7 @@ const getTodos = () =>
 
 const useTodos = () =>
   useQuery<Todo[], Error>({
-    queryKey: ["todos"],
+    queryKey: queryKeys.todos,
     queryFn: getTodos,
     staleTime: 10 * 1000, // 10s
   });
