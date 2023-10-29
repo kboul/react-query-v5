@@ -9,13 +9,12 @@ export default function TodoForm() {
 
   const queryClient = useQueryClient();
 
-  const addTodo = useMutation({
+  const addTodo = useMutation<Todo, Error, Todo>({
     mutationFn: (todo: Todo) =>
       axios
         .post<Todo>("https://jsonplaceholder.typicode.com/todos", todo)
         .then((res) => res.data),
     onSuccess: (savedTodo) => {
-      console.log(savedTodo);
       // Approach 1: invaldiating the cache
       // queryClient.invalidateQueries({
       //   queryKey: ["todos"],
@@ -42,9 +41,16 @@ export default function TodoForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input ref={ref} type="text" />
-      <button>Add</button>
-    </form>
+    <>
+      {addTodo.error && (
+        <div style={{ border: "1px solid red", width: "fit-content" }}>
+          {addTodo.error.message}
+        </div>
+      )}
+      <form onSubmit={handleSubmit}>
+        <input ref={ref} type="text" />
+        <button>Add</button>
+      </form>
+    </>
   );
 }
