@@ -2,14 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 
 import { Todo } from "../types";
 import { queryKeys } from "../constants";
-import ApiClient from "../api/client";
-
-const apiClient = new ApiClient<Todo>("/todos");
+import { todoApi } from "../api";
 
 const useTodos = () =>
   useQuery<Todo[], Error>({
     queryKey: queryKeys.todos,
-    queryFn: apiClient.getAll,
+    queryFn: todoApi.getAll,
     staleTime: 10 * 1000, // 10s
   });
 
