@@ -30,7 +30,7 @@ export default function TodoForm() {
       )}
       <form onSubmit={handleSubmit}>
         <input ref={ref} type="text" />
-        <button>{addTodo.isPending ? "Adding..." : "Add"}</button>
+        <button>Add</button>
       </form>
     </>
   );

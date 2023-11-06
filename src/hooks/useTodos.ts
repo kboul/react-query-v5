@@ -1,18 +1,15 @@
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
 import { Todo } from "../types";
 import { queryKeys } from "../constants";
+import ApiClient from "../api/client";
 
-const getTodos = () =>
-  axios
-    .get<Todo[]>("https://jsonplaceholder.typicode.com/todos")
-    .then((res) => res.data);
+const apiClient = new ApiClient<Todo>("/todos");
 
 const useTodos = () =>
   useQuery<Todo[], Error>({
     queryKey: queryKeys.todos,
-    queryFn: getTodos,
+    queryFn: apiClient.getAll,
     staleTime: 10 * 1000, // 10s
   });
 
